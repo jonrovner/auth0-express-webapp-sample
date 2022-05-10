@@ -2,10 +2,44 @@
 
 <h1 class="text-4xl">Clients</h1>
 
-<% if (locals.isAuthenticated) { %>
-    <p>You are logged in. <a href="/profile" class="underline">View your profile</a>.</p>
-<% } else { %>
-    <p>You are not logged in. <a href="/login" class="underline">Login</a>.</p>
-<% } %>
+<header class="header">
+    <h2>Clients and Rules</h2>				
+</header>
+
+<section class="main">				
+    <ul class="w-96 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <% clients.forEach( client => { %>
+        <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600"> <%- client.name  %>
+            <ul class="w-72 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <% client.rules.forEach( rule => { %>
+                <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <%- rule  %>
+                </li>
+                <% }); %>	
+            </ul>
+        </li>
+        <% }); %>
+    </ul>
+    <h3 class="font-large">Rules for specific App</h3>
+    <ul class="w-96 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <% rulesWithAppNames.forEach( rule => { %>
+        <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+            <p><%- rule.name  %></p>
+            <p>Specific for <span><%- rule.appName %></span></p>
+            
+        </li>
+        
+        <% }); %>
+    </ul>
+    <h3 class="font-large">Global Rules</h3>
+    <ul class="w-96 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <% globalRules.forEach( rule => { %>
+        <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600" ><%- rule.name  %></li>
+        <p><%- rule.appName %></p>
+        <% }); %>
+    </ul>
+
+</section>
+
 
 <%- include('partials/footer') -%>

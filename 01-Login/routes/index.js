@@ -1,14 +1,16 @@
 var router = require('express').Router();
 const { requiresAuth } = require('express-openid-connect');
+const axios = require('axios')
 
 const getToken = async () => {
   const body = {
     "client_id":process.env.API_EXPLORER_CLIENT_ID,
     "client_secret":process.env.API_EXPLORER_SECRET,
-    "audience":process.env.MANAGEMENT_API_URL,
+    "audience":process.env.ISSUER_BASE_URL+'/api/v2/',
     "grant_type":"client_credentials"}  
   try{
-    const response = await axios.post(process.env.TOKEN_URL, body)    
+    const url = process.env.ISSUER_BASE_URL+'/oauth/token'
+    const response = await axios.post(url, body)    
     return response.data.access_token   
   } catch (err){
     console.log('ERROR GETTING TOKEN', err)
@@ -33,13 +35,13 @@ async function getClients(req, res, next){
   
     const get_clients = { 
       method: "GET",
-      url: process.env.CLIENTS_URL,
+      url: process.env.ISSUER_BASE_URL+'/api/v2/clients',
       headers: { "authorization": "Bearer "+ token },
     };
     
     const get_rules = {
       method: "GET",
-      url: process.env.RULES_URL,
+      url: process.env.ISSUER_BASE_URL+'/api/v2/rules',
       headers: { "authorization": "Bearer "+ token },      
     };  
 
@@ -90,16 +92,15 @@ router.get('/profile', requiresAuth(), function (req, res, next) {
 });
 
 router.get('/clients', requiresAuth(), function (req, res, next) {
-  
+  if(!req.oidc.user){return res.render('index')}
+  next()
+},  
   getClients, function(req, res, next){
-    res.render('client', {
-      userProfile: JSON.stringify(req.oidc.user, null, 2),
+    console.log('LOCAS: ', res.locals)
+    res.render('clients', {
       title: 'clients page'
     });
-
   }
-  
-  
-});
+);
 
 module.exports = router;
