@@ -6,6 +6,8 @@ const path = require('path');
 const router = require('./routes/index');
 const { auth } = require('express-openid-connect');
 
+
+
 dotenv.load();
 
 const app = express();
@@ -17,10 +19,16 @@ app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+
 const config = {
   authRequired: false,
-  auth0Logout: true
+  auth0Logout: true,
+  secret: 'a long, randomly-generated string stored in env',
+  baseURL: 'https://charliesample.herokuapp.com/',
+  clientID: 'oPrtTJwHTHnSSZRoFAOoTNOOFPMUZZTV',
+  issuerBaseURL: 'https://jon-dev.us.auth0.com'
 };
+
 
 const port = process.env.PORT || 3000;
 if (!config.baseURL && !process.env.BASE_URL && process.env.PORT && process.env.NODE_ENV !== 'production') {
