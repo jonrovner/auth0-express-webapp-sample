@@ -96,7 +96,7 @@ router.get('/clients', requiresAuth(), function (req, res, next) {
   next()
 },  
   getClients, function(req, res, next){
-    console.log('LOCAS: ', res.locals)
+    
     res.render('clients', {
       title: 'clients page'
     });

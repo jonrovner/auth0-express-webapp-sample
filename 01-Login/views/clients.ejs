@@ -6,13 +6,13 @@
     <h2>Clients and Rules</h2>				
 </header>
 
-<section class="main">				
-    <ul class="w-96 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+<section class="flex flex-col gap-3">				
+    <ul class="w-96 pb-2 text-base font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
         <% clients.forEach( client => { %>
-        <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600"> <%- client.name  %>
+        <li class="w-full px-4 text-base py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600"> <%- client.name  %>
             <ul class="w-72 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <% client.rules.forEach( rule => { %>
-                <li class="w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                <li class="w-full text-sm px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600">
                     <%- rule  %>
                 </li>
                 <% }); %>	
